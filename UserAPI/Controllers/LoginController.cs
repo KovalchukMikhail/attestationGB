@@ -52,6 +52,13 @@ namespace UserAPI.Controllers
             {
                 if (_userRepository.AdminExist())
                     return BadRequest("Пользователь с ролью \"Администратор\" уже существует");
+
+                if (!DataChecker.IsEmail(userLogin.Name))
+                    return BadRequest("Логин должен представлять электронную почту");
+
+                if (!DataChecker.CheckPassword(userLogin.Password))
+                    return BadRequest("Пароль должен содержать от 8 до 20 символов включая, заглавные, строчные латинские буквы и цифры");
+
                 return AddUser(userLogin, RoleId.Administrator);
             }
             catch(Exception ex)
@@ -68,11 +75,14 @@ namespace UserAPI.Controllers
             try
             {
                 userLogin.Name = userLogin.Name.ToLower();
-                if (DataChecker.IsEmail(userLogin.Name))
-                {
-                    return AddUser(userLogin, RoleId.User);
-                }
-                return BadRequest("Логин должен представлять электронную почту");
+                if (!DataChecker.IsEmail(userLogin.Name))
+                    return BadRequest("Логин должен представлять электронную почту");
+
+                if (!DataChecker.CheckPassword(userLogin.Password))
+                    return BadRequest("Пароль должен содержать от 8 до 20 символов включая, заглавные, строчные латинские буквы и цифры");
+
+                return AddUser(userLogin, RoleId.User);
+
             }
             catch(Exception ex)
             {
