@@ -9,6 +9,8 @@ using UserAPI.Data.Model;
 
 namespace UserAPI.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class RestrictedController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
