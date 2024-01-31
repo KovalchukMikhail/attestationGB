@@ -11,11 +11,11 @@ namespace UserAPI.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class RestrictedController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
 
-        public RestrictedController(IUserRepository userRepository)
+        public UserController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
@@ -52,7 +52,7 @@ namespace UserAPI.Controllers
             }
         }
         [HttpDelete]
-        [Route("DeletUser")]
+        [Route("DeleteUser")]
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteUserByEmail(string email)
         {
